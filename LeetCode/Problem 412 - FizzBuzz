@@ -5,9 +5,8 @@ Problem 412 - FizzBuzz
 	But for multiples of three it should output “Fizz” instead of the number and for the multiples of five output “Buzz”.
     For numbers which are multiples of both three and five output “FizzBuzz”.
 
-
 Solution - Python
-https://leetcode.com/submissions/detail/386752564/
+    https://leetcode.com/submissions/detail/386752564/
 
 	class Solution:
     def fizzBuzz(self, n: int) -> List[str]:
