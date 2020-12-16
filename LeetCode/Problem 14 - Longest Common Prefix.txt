@@ -1,0 +1,21 @@
+Problem 14 - Longest Common Prefix
+	https://leetcode.com/problems/longest-common-prefix/
+
+	Write a function to find the longest common prefix string amongst an array of strings.
+
+	If there is no common prefix, return an empty string "".
+
+Solution - Python
+	https://leetcode.com/submissions/detail/376075944/
+
+	class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        if not strs: return ""
+        x = set(strs)
+        r_str = ""
+        for i in range(len(strs[0])):
+            if all(sub_string.startswith(r_str + strs[0][i]) for sub_string in x):
+                r_str += strs[0][i]
+            else:
+                break
+        return r_str

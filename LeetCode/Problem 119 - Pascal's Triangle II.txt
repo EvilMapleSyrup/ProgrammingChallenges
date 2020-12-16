@@ -1,0 +1,23 @@
+Problem 119 - Pascal's Triangle II
+	https://leetcode.com/problems/pascals-triangle-ii/
+
+	Given an integer rowIndex, return the rowIndex^th row of the Pascal's triangle.
+
+Solution - Python
+	https://leetcode.com/submissions/detail/380012801/
+
+	class Solution:
+    def getRow(self, rowIndex: int) -> List[int]:
+        r_list = []
+        for i in range(rowIndex+1):
+            row_fact = self.getFact(rowIndex)
+            choose_fact = self.getFact(i)
+            to_add = row_fact // (choose_fact*(self.getFact(rowIndex-i)))
+            r_list.append(to_add)
+        return r_list
+    
+    def getFact(self, number: int) -> int:
+        fact = 1
+        for i in range(1, number+1):
+            fact *= i
+        return fact

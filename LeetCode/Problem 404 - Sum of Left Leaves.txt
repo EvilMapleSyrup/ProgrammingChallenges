@@ -1,0 +1,30 @@
+Problem 404 - Sum of Left Leaves
+	https://leetcode.com/problems/sum-of-left-leaves/
+
+	Find the sum of all left leaves in a given binary tree.
+
+Solution - Python
+	https://leetcode.com/submissions/detail/385920082/
+
+	# Definition for a binary tree node.
+	# class TreeNode:
+	#     def __init__(self, val=0, left=None, right=None):
+	#         self.val = val
+	#         self.left = left
+	#         self.right = right
+	class Solution:
+	    def sumOfLeftLeaves(self, root: TreeNode) -> int:
+        	if not root:
+	            return 0
+    	    que = [root]
+        	cur = None
+	        total = 0
+    	    while que:
+        	    cur = que.pop()
+            	if cur.left:
+	                que.append(cur.left)
+    	            if not cur.left.left and not cur.left.right:
+        	            total += cur.left.val
+            	if cur.right:
+	                que.append(cur.right)
+    	    return total

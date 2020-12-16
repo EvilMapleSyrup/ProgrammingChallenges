@@ -1,0 +1,23 @@
+Problem 234 - Palindrome Linked List
+	https://leetcode.com/problems/palindrome-linked-list/
+
+	Given a singly linked list, determine if it is a palindrome.
+
+Solution - Python
+	https://leetcode.com/submissions/detail/375229560/
+
+	# Definition for singly-linked list.
+	# class ListNode:
+	#     def __init__(self, val=0, next=None):
+	#         self.val = val
+	#         self.next = next
+
+	class Solution:
+	    def isPalindrome(self, head: ListNode) -> bool:
+    	    if not head or not head.next:
+        	    return True
+	        visited_val = []
+    	    while head:
+        	    visited_val.append(head.val)
+            	head = head.next
+	        return visited_val == visited_val[::-1]

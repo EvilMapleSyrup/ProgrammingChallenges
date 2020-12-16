@@ -1,0 +1,18 @@
+Problem 905 - Sort Array By Parity
+	https://leetcode.com/problems/sort-array-by-parity/
+
+	Given an array A of non-negative integers, return an array consisting of all the even elements of A, followed by all the odd elements of A.
+	You may return any answer array that satisfies this condition.
+
+Solution - Python
+	https://leetcode.com/submissions/detail/384264673/
+
+	class Solution:
+    def sortArrayByParity(self, A: List[int]) -> List[int]:
+        r_arr = []
+        for digit in A:
+            if digit % 2 == 0:
+                r_arr.insert(0, digit)
+            else:
+                r_arr.append(digit)
+        return r_arr
