@@ -1,0 +1,19 @@
+Problem 41 - First Missing Positive
+	https://leetcode.com/problems/first-missing-positive/
+
+	Given an unsorted integer array nums, find the smallest missing positive integer.
+
+	Follow up: Could you implement an algorithm that runs in O(n) time and uses constant extra space.?
+
+Solution - Python
+	https://leetcode.com/submissions/detail/431765334/
+
+	class Solution:
+	    def firstMissingPositive(self, nums: List[int]) -> int:
+    	    if nums == []:
+        	    return 1
+	        numSet = set(nums)
+    	    for i in range(1, max(nums)+2):
+        	    if i not in numSet and i > 0:
+	                return i
+    	    return 1

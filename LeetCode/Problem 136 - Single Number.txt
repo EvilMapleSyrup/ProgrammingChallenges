@@ -1,0 +1,19 @@
+Problem 136 - Single Number
+	https://leetcode.com/problems/single-number/
+
+	Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+
+Solution - Python
+	https://leetcode.com/submissions/detail/431787557/
+
+	class Solution:
+	    def singleNumber(self, nums: List[int]) -> int:
+    	    seen = set()
+	        idx = 0
+        	while idx < len(nums):
+    	        if nums[idx] not in seen:
+	                seen.add(nums[idx])
+    	        else:
+	                seen.remove(nums[idx])
+            	idx += 1
+	        return next(iter(seen))

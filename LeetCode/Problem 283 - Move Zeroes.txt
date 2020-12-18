@@ -1,0 +1,20 @@
+Problem 283 - Move Zeroes
+	https://leetcode.com/problems/move-zeroes/
+
+	Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+Solution - Python
+	https://leetcode.com/submissions/detail/431775469/
+
+	class Solution:
+	    def moveZeroes(self, nums: List[int]) -> None:
+	        pos = 0
+    	    for i in range(len(nums)):
+        	    if nums[i] != 0:
+            	    nums[i], nums[pos] = nums[pos], nums[i]
+	                pos += 1
+                
+
+    	    """
+	        Do not return anything, modify nums in-place instead.
+        	"""
