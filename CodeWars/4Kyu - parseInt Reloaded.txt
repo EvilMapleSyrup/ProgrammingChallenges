@@ -1,0 +1,63 @@
+4Kyu - parseInt Reloaded
+	https://www.codewars.com/kata/525c7c5ab6aecef16e0001a5
+
+	In this kata we want to convert a string into an integer. The strings simply represent the numbers in words.
+
+	Examples:
+		"one" => 1
+		"twenty" => 20
+		"two hundred forty-six" => 246
+		"seven hundred eighty-three thousand nine hundred and nineteen" => 783919
+
+	Additional Notes:
+		The minimum number is "zero" (inclusively)
+		The maximum number, which must be supported is 1 million (inclusively)
+		The "and" in e.g. "one hundred and twenty-four" is optional, in some cases it's present and in others it's not
+		All tested numbers are valid, you don't need to validate them
+
+Solution - Python
+
+	def parse_int(string):
+	    h_replace = string.replace(' and ',' ').replace(' hundred','H')
+	    word_split = h_replace.split(' ')
+	    result = 0
+	    previous = 0
+	    for word in word_split:
+	        previous = process_word(word)
+	        result = process_word(word, result)
+	    return result
+	
+	def process_word(word, previous=0):
+	    uniques = ['zero', 'one', 'tw', 'th', 'fo', 'fi', 'six', 'seven', 'eight', 'nin', 'ten', 'eleven', 'twelve']
+	    suffix = ['teen', 'ty', 'H']
+	    multiplier = {'thousand': 1000, 'million':1000000}
+	    if type(word) == str and word not in multiplier and '-' not in word:   
+	        hasSuf = False
+	        currentSuf = None
+	        for suf in suffix:
+	            if word.endswith(suf):
+	                hasSuf = True
+	                currentSuf = suf
+	        if hasSuf == False:
+	            if uniques.count(word) == 1:
+	                return previous + uniques.index(word)
+	            for val in uniques:
+	                if word == val or word.startswith(val):
+	                    return previous + uniques.index(val)
+	        else:
+	              for val in uniques:
+	                    if word.startswith(val):
+	                        if currentSuf == suffix[0]:
+	                            return previous + (uniques.index(val) + 10)
+	                        elif currentSuf == suffix[1]:
+	                            return previous + (uniques.index(val) * 10)
+	                        else:
+	                            return previous + (uniques.index(val) * 100)
+	    elif '-' in word:
+	        result = 0
+	        for split_word in word.split('-'):
+	            result += process_word(split_word)
+	        return result + previous
+	    else:
+	        if word in multiplier:
+	            return multiplier.get(word) * previous

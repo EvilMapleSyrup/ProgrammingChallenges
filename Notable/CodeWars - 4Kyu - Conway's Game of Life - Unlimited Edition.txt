@@ -1,0 +1,86 @@
+4Kyu - Conway's Game of Life - Unlimited Edition
+	https://www.codewars.com/kata/52423db9add6f6fc39000354
+
+	Given a 2D array and a number of generations, compute n timesteps of Conway's Game of Life.
+
+	The rules of the game are:
+
+		Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
+		Any live cell with more than three live neighbours dies, as if by overcrowding.
+		Any live cell with two or three live neighbours lives on to the next generation.
+		Any dead cell with exactly three live neighbours becomes a live cell.
+		Each cell's neighborhood is the 8 cells immediately around it (i.e. Moore Neighborhood). The universe is infinite in both the x and y dimensions and all cells are initially dead - except for those specified in the arguments. The return value should be a 2d array cropped around all of the living cells. (If there are no living cells, then return [[]].)
+
+	For illustration purposes, 0 and 1 will be represented as ░░ and ▓▓ blocks respectively (PHP, C: plain black and white squares)
+
+Solution - Python
+	
+	def get_generation(cells, generations):    
+	    if generations == 0:
+	        return cells
+	    while generations >= 1:
+	        print(generations)
+	        currentGen = [[0] * (len(cells[0]) + 2)] * 2
+	        empty = [0] * (len(cells[0]) + 2)
+	        for arr in cells:
+	            temp = arr[:]
+	            temp.insert(0,0)
+	            temp.append(0)
+	            currentGen.insert(-1,temp)
+	    #buffer    
+	        nextGen = [[0] * len(currentGen[0]) for _ in range(len(currentGen))]
+	        for aIdx, cellRow in enumerate(currentGen):
+	            for cIdx, cell in enumerate(cellRow):
+	                neighbors, min, maxR, maxA = 0, -1, len(cellRow)-1, len(currentGen)-1
+	                #check top left to right
+	                if aIdx - 1 >= min and cIdx - 1 >= min:
+	                     if currentGen[aIdx-1][cIdx-1] == 1:
+	                         neighbors += 1
+	                if aIdx - 1 >= min:
+	                     if currentGen[aIdx-1][cIdx] == 1:
+	                         neighbors += 1
+	                if aIdx - 1 >= min and cIdx + 1 <= maxR:
+	                     if currentGen[aIdx-1][cIdx+1] == 1:
+	                         neighbors += 1                     
+	                 #check same row
+	                if cIdx - 1 >= min:
+	                    if currentGen[aIdx][cIdx-1] == 1:
+	                        neighbors += 1
+	                if cIdx + 1 <= maxR:
+	                    if currentGen[aIdx][cIdx+1] == 1:
+	                        neighbors += 1
+	                #bottom left to right
+	                if aIdx + 1 <= maxA and cIdx - 1 >= min:
+	                    if currentGen[aIdx+1][cIdx-1] == 1:
+	                        neighbors += 1
+	                if aIdx + 1 <= maxA:
+	                    if currentGen[aIdx+1][cIdx] == 1:
+	                        neighbors += 1
+	                if aIdx + 1 <= maxA and cIdx + 1 <= maxR:
+	                    if currentGen[aIdx+1][cIdx+1] == 1:
+	                        neighbors += 1
+	                #conditions
+	                if cell == 1 and (neighbors == 2 or neighbors == 3):
+	                    nextGen[aIdx][cIdx] = 1
+	                else:
+	                    nextGen[aIdx][cIdx] = 0
+	                if cell == 0 and neighbors == 3:
+	                    nextGen[aIdx][cIdx] = 1
+	    #zero check 
+	        gridSize = [-1,-1,-1,-1] # min x,y max x,y
+	        for pos, array in enumerate(nextGen):
+	            for posV, value in enumerate(array):
+	                if value == 1:
+	                    if posV < gridSize[0] or gridSize[0] == -1:
+	                        gridSize[0] = posV
+	                    if pos < gridSize[1] or gridSize[1] == -1:
+	                        gridSize[1] = pos
+	                    if posV > gridSize[2]:
+	                        gridSize[2] = posV
+	                    if pos > gridSize[3]:
+	                        gridSize[3] = pos
+	        rArray = []        
+	        for pos, arr in enumerate(nextGen):
+	            if pos >= gridSize[1] and pos <= gridSize[3]:
+	                rArray.append(nextGen[pos][gridSize[0]:gridSize[2]+1])          
+	        return get_generation(rArray, generations -1)	
