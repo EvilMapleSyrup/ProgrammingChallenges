@@ -1,0 +1,64 @@
+4Kyu - Codewars Ranking System
+Problem
+https://www.codewars.com/kata/51fda2d95d6efda45e00004e/python
+
+	Write a class called User that is used to calculate the amount that a user will progress through a ranking system similar to the one Codewars uses.
+
+
+Solution - Python
+
+class User:
+    
+    def __init__(self):
+        self._rank = -8
+        self._progress = 0
+        
+    @property
+    def rank(self):
+        return self._rank
+    
+    @property
+    def progress(self):
+        return self._progress
+    
+    @rank.setter
+    def rank(self, value):
+        if self.rank >= 8 or value < 0:
+            self._progress = 0
+            return
+        self._rank += value
+        if self.rank == 0:
+            if value > 0:
+                self._rank += 1
+            if value < 0:
+                self._rank += -1
+    
+    @progress.setter
+    def progress(self, value):
+        while value >= 100:
+            self.rank = 1
+            value -= 100
+        self._progress += value
+        if self._progress >= 100:
+            self._progress -= 100
+            self.rank = 1
+        if self._rank == 8:
+            self._progress = 0
+        
+            
+    def inc_progress(self, value):
+        if value < -8 or value > 8:
+            raise ValueError('Invalid value input')
+        ranks = [-8,-7,-6,-5,-4,-3,-2,-1,1,2,3,4,5,6,7,8]
+        diff = ranks.index(value) - ranks.index(self.rank)
+        if diff <= 0:
+            if diff <= -2:
+                return
+            elif diff == -1:
+                self.progress = 1
+            else:
+                self.progress = 3
+            return
+                
+        increase = 10 * diff * diff
+        self.progress = increase
